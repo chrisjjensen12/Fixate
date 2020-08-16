@@ -23,8 +23,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Fixate"),
+        title: Text("Your Week",
+          style: Theme.of(context).textTheme.headline4,
+        ),
         backgroundColor: Colors.white,
+        centerTitle: false,
       ),
       body: _children[_currentIndex], //build method for whatever tab eg home, to do, calendar
       bottomNavigationBar: CupertinoTabBar(

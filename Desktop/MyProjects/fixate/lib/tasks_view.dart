@@ -1,33 +1,63 @@
-
 import 'package:flutter/material.dart';
-import 'home_card_values.dart';
-import 'tasks_view.dart';
+import 'tasks_details_view.dart';
 
-class HomeView extends StatelessWidget{
+// ignore: must_be_immutable
+class TasksView extends StatefulWidget {
 
-  final List<HomeCardValues> daysList = [ //you can add numerical values to this, look at 1manstartup listview cards 
-    HomeCardValues("Monday", 0),
-    HomeCardValues("Tuesday", 0),
-    HomeCardValues("Wednesday", 0),
-    HomeCardValues("Thursday", 0),
-    HomeCardValues("Friday", 0),
-    HomeCardValues("Saturday", 0),
-    HomeCardValues("Sunday", 0),
-  ];
+  String appBarTitle;
+  TasksView(this.appBarTitle);
 
+  @override
+  State<StatefulWidget> createState() {
+    return _TasksState(this.appBarTitle);
+  }
+}
+
+class _TasksState extends State<TasksView> {
+  int numTasksCounter;
+  int count = 0;
+  String appBarTitle;
+  _TasksState(this.appBarTitle);
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      color: new Color(0xF8F8F8),
-      child: new ListView.builder(
-        itemCount: daysList.length,
-        itemBuilder: (BuildContext context, int index) => buildDaysCard(context, index)
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(appBarTitle),
+        backgroundColor: Colors.white,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.add,
+            color: Colors.black,
+            ),
+          onPressed: () {
+            Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) { 
+                  return TasksDetailsView();
+                  }
+                ),
+              );
+            },
+          )
+        ],
+      ),
+      body: getTasksView(),
     );
   }
 
+  Widget getTasksView(){
+    return Container(
+      color: new Color(0xF8F8F8),
+      child: new ListView.builder(
+        itemCount: count,
+        itemBuilder: (BuildContext context, int position) => buildTaskCard()
+      ),
+    );
+  }
 
-  Widget buildDaysCard(BuildContext context, int index){
-    final homeCardValue = daysList[index];
+  Widget buildTaskCard(){
     return new Center(
       child: Padding(
         padding: const EdgeInsets.all(7.0),
@@ -50,7 +80,7 @@ class HomeView extends StatelessWidget{
                         padding: const EdgeInsets.only(top: 12, bottom: 8, left: 17, right: 8),
                         child: Row( 
                           children: <Widget>[
-                            Text(homeCardValue.day,
+                            Text("hello",
                             style: Theme.of(context).textTheme.headline1,
                             ),
                           ],
@@ -62,14 +92,7 @@ class HomeView extends StatelessWidget{
                           children: <Widget>[
                             RawMaterialButton(
                               onPressed: () {
-                                // print(homeCardValue.day);
-                                Navigator.push(
-                                  context, 
-                                  MaterialPageRoute(builder: (context) { 
-                                    return TasksView(homeCardValue.day);
-                                    }
-                                  ),
-                                );
+                                debugPrint("clicked arrow");
                               },
                               elevation: 2.0,
                               fillColor: Colors.black,
@@ -96,7 +119,7 @@ class HomeView extends StatelessWidget{
                       padding: const EdgeInsets.only(top: 8, bottom: 0, left: 8, right: 50),
                       child: Row( 
                         children: <Widget>[
-                          Text(homeCardValue.numTasks.toString(),
+                          Text("hi",
                           style: Theme.of(context).textTheme.headline2,
                           ),
                         ],
@@ -122,5 +145,3 @@ class HomeView extends StatelessWidget{
     );
   }
 }
-
-
