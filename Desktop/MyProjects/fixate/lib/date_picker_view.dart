@@ -1,0 +1,62 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+// import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
+
+class DatePickerView extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return DatePickerViewState();
+  }
+}
+
+class DatePickerViewState extends State<DatePickerView> {
+  DateTime _dateTime = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text("Select Date"),
+      ),
+      body: Column(
+        children: <Widget>[
+          SizedBox(
+              height: 200,
+              child: CupertinoDatePicker(
+                // mode: CupertinoDatePickerMode.date,
+                use24hFormat: true,
+                initialDateTime: _dateTime,
+                onDateTimeChanged: (dateTime) {
+                  // print(dateTime);
+                  setState(() {
+                    _dateTime = dateTime;
+                  });
+                },
+              )),
+          CupertinoButton(
+            color: Colors.black,
+            child: Text('Done', style: new TextStyle(color: Colors.white)),
+            onPressed: () {
+              print(Text(
+                  '${_dateTime.month}/${_dateTime.day}/${_dateTime.year} ${_dateTime.hour}:${_dateTime.minute}'));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// showModalBottomSheet<void>(
+//                     context: context,
+//                     builder: (BuildContext context) {
+//                       return CupertinoDatePicker(
+//                         mode: CupertinoDatePickerMode.date,
+//                         initialDateTime: DateTime.now(),
+//                         onDateTimeChanged: (DateTime newDateTime) {
+//                           setState(() => newDateTime = _dateTime);
+//                         },
+//                       );
+//                     },
+//                   );
