@@ -3,8 +3,8 @@ import 'date_picker_view.dart';
 import 'package:flutter/cupertino.dart';
 // import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
+// ignore: must_be_immutable
 class TasksDetailsView extends StatefulWidget {
-  @override
   State<StatefulWidget> createState() {
     return TasksDetailsViewState();
   }
@@ -44,7 +44,7 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                     labelText: "Title",
                   ),
                 )),
-            //date time picker
+            // date time picker
             Padding(
               padding: EdgeInsets.only(top: 10, bottom: 5),
               child: CupertinoButton(
@@ -53,16 +53,52 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                     _dateTime == null ? 'Date and Time' : _dateTime.toString(),
                     style: new TextStyle(color: Colors.white)),
                 onPressed: () {
-                  // print(homeCardValue.day);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return DatePickerView();
-                    }),
-                  );
+                  navigateToDatePicker(context).then((DateTime result) {
+                    _dateTime = result;
+                    setState(() {});
+                  });
                 },
               ),
             ),
+            //display date and time
+            // Padding(
+            //   padding: EdgeInsets.only(top: 15, bottom: 15),
+            //   child: Row(
+            //     children: <Widget>[
+            //       Expanded(
+            //         child: CupertinoButton(
+            //           color: Colors.black,
+            //           child: Text(
+            //               _dateTime == null
+            //                   ? 'Select Date'
+            //                   : _dateTime.toString(),
+            //               style: new TextStyle(color: Colors.white)),
+            //           onPressed: () {
+            //             navigateToDatePicker(context).then((DateTime result) {
+            //               // print(
+            //               //     '${result.month}/${result.day}/${result.year} ${result.hour}:${result.minute}');
+            //               _dateTime = result;
+            //               setState(() {});
+            //             });
+            //           },
+            //         ),
+            //       ),
+            //       Container(width: 5.0),
+            //       Expanded(
+            //         child: CupertinoButton(
+            //           pressedOpacity: 1,
+            //           color: Colors.black,
+            //           child: Text(
+            //               _dateTime == null ? 'null' : _dateTime.toString(),
+            //               style: new TextStyle(color: Colors.white)),
+            //           onPressed: () {
+            //             debugPrint("nothing happens");
+            //           },
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             //location
             Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 5),
@@ -109,6 +145,7 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                       onPressed: () {
                         setState(() {
                           debugPrint("Save clicked");
+                          Navigator.pop(context);
                         });
                       },
                     ),
@@ -134,4 +171,14 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
       ),
     );
   }
+}
+
+Future<DateTime> navigateToDatePicker(BuildContext context) async {
+  DateTime result = await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => DatePickerView()),
+  );
+  // print(
+  //     '${result.month}/${result.day}/${result.year} ${result.hour}:${result.minute}');
+  return result;
 }

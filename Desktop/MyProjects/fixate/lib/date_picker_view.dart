@@ -25,7 +25,7 @@ class DatePickerViewState extends State<DatePickerView> {
               height: 200,
               child: CupertinoDatePicker(
                 // mode: CupertinoDatePickerMode.date,
-                use24hFormat: true,
+                use24hFormat: false,
                 initialDateTime: _dateTime,
                 onDateTimeChanged: (dateTime) {
                   // print(dateTime);
@@ -38,8 +38,9 @@ class DatePickerViewState extends State<DatePickerView> {
             color: Colors.black,
             child: Text('Done', style: new TextStyle(color: Colors.white)),
             onPressed: () {
-              print(Text(
-                  '${_dateTime.month}/${_dateTime.day}/${_dateTime.year} ${_dateTime.hour}:${_dateTime.minute}'));
+              // print(
+              //     '${_dateTime.month}/${_dateTime.day}/${_dateTime.year} ${_dateTime.hour}:${_dateTime.minute}'); //_dateTime is variable to be popped
+              Navigator.pop(context, _dateTime);
             },
           ),
         ],
