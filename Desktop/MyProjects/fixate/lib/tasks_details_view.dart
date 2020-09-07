@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'date_picker_view.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 // import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 // ignore: must_be_immutable
@@ -15,7 +16,6 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
   TextEditingController notesController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   DateTime _dateTime;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +50,10 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
               child: CupertinoButton(
                 color: Colors.black,
                 child: Text(
-                    _dateTime == null ? 'Date and Time' : _dateTime.toString(),
+                    _dateTime == null
+                        ? 'Date and Time'
+                        : DateFormat('EEE MMM d, ' 'h:mm aaa')
+                            .format(_dateTime),
                     style: new TextStyle(color: Colors.white)),
                 onPressed: () {
                   navigateToDatePicker(context).then((DateTime result) {
@@ -138,10 +141,10 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: RaisedButton(
+                    child: CupertinoButton(
                       color: Colors.black,
-                      textColor: Colors.white,
-                      child: Text("Save"),
+                      child: Text("Save",
+                          style: Theme.of(context).textTheme.headline5),
                       onPressed: () {
                         setState(() {
                           debugPrint("Save clicked");
@@ -152,10 +155,12 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                   ),
                   Container(width: 5.0),
                   Expanded(
-                    child: RaisedButton(
+                    child: CupertinoButton(
                       color: Colors.black,
-                      textColor: Colors.white,
-                      child: Text("Delete"),
+                      child: Text(
+                        "Delete",
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
                       onPressed: () {
                         setState(() {
                           debugPrint("Delete clicked");
