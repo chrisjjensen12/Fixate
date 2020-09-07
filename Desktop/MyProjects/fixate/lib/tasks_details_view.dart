@@ -63,45 +63,6 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                 },
               ),
             ),
-            //display date and time
-            // Padding(
-            //   padding: EdgeInsets.only(top: 15, bottom: 15),
-            //   child: Row(
-            //     children: <Widget>[
-            //       Expanded(
-            //         child: CupertinoButton(
-            //           color: Colors.black,
-            //           child: Text(
-            //               _dateTime == null
-            //                   ? 'Select Date'
-            //                   : _dateTime.toString(),
-            //               style: new TextStyle(color: Colors.white)),
-            //           onPressed: () {
-            //             navigateToDatePicker(context).then((DateTime result) {
-            //               // print(
-            //               //     '${result.month}/${result.day}/${result.year} ${result.hour}:${result.minute}');
-            //               _dateTime = result;
-            //               setState(() {});
-            //             });
-            //           },
-            //         ),
-            //       ),
-            //       Container(width: 5.0),
-            //       Expanded(
-            //         child: CupertinoButton(
-            //           pressedOpacity: 1,
-            //           color: Colors.black,
-            //           child: Text(
-            //               _dateTime == null ? 'null' : _dateTime.toString(),
-            //               style: new TextStyle(color: Colors.white)),
-            //           onPressed: () {
-            //             debugPrint("nothing happens");
-            //           },
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             //location
             Padding(
                 padding: EdgeInsets.only(top: 10, bottom: 5),
@@ -140,6 +101,7 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
               padding: EdgeInsets.only(top: 15, bottom: 15),
               child: Row(
                 children: <Widget>[
+                  //save button
                   Expanded(
                     child: CupertinoButton(
                       color: Colors.black,
@@ -154,6 +116,7 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                     ),
                   ),
                   Container(width: 5.0),
+                  //delete button
                   Expanded(
                     child: CupertinoButton(
                       color: Colors.black,
@@ -187,3 +150,43 @@ Future<DateTime> navigateToDatePicker(BuildContext context) async {
   //     '${result.month}/${result.day}/${result.year} ${result.hour}:${result.minute}');
   return result;
 }
+
+//display date and time
+// Padding(
+//   padding: EdgeInsets.only(top: 15, bottom: 15),
+//   child: Row(
+//     children: <Widget>[
+//       Expanded(
+//         child: CupertinoButton(
+//           color: Colors.black,
+//           child: Text(
+//               _dateTime == null
+//                   ? 'Select Date'
+//                   : _dateTime.toString(),
+//               style: new TextStyle(color: Colors.white)),
+//           onPressed: () {
+//             navigateToDatePicker(context).then((DateTime result) {
+//               // print(
+//               //     '${result.month}/${result.day}/${result.year} ${result.hour}:${result.minute}');
+//               _dateTime = result;
+//               setState(() {});
+//             });
+//           },
+//         ),
+//       ),
+//       Container(width: 5.0),
+//       Expanded(
+//         child: CupertinoButton(
+//           pressedOpacity: 1,
+//           color: Colors.black,
+//           child: Text(
+//               _dateTime == null ? 'null' : _dateTime.toString(),
+//               style: new TextStyle(color: Colors.white)),
+//           onPressed: () {
+//             debugPrint("nothing happens");
+//           },
+//         ),
+//       ),
+//     ],
+//   ),
+// ),

@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter_cupertino_date_picker: ^1.0.26+2
   intl: ^0.15.7
+  sqflite: any
+  path_provider: any
   flutter:
     sdk: flutter
 
