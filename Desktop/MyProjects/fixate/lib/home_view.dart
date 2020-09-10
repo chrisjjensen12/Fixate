@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'home_card_values.dart';
 import 'tasks_view.dart';
+import 'package:fixate/utils/database_helper.dart';
+import 'dart:async';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
+  // final Note note;
+  // HomeView(this.note);
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  // final Note note;
+  // _HomeViewState(this.note);
+  DatabaseHelper databaseHelper = DatabaseHelper();
   final List<HomeCardValues> daysList = [
     //you can add numerical values to this, look at 1manstartup listview cards
     HomeCardValues("Monday", 0),
@@ -26,6 +37,10 @@ class HomeView extends StatelessWidget {
 
   Widget buildDaysCard(BuildContext context, int index) {
     final homeCardValue = daysList[index];
+    getTasks().then((int result) {
+      daysList[0].numTasks = result;
+      setState(() {});
+    });
     return new Center(
       child: Padding(
         padding: const EdgeInsets.all(7.0),
@@ -111,7 +126,7 @@ class HomeView extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                "Tasks",
+                                taskOrTasks(daysList[0].numTasks),
                                 style: Theme.of(context).textTheme.headline3,
                               ),
                             ],
@@ -125,5 +140,48 @@ class HomeView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<int> getTasks() async {
+    int numTasks = await databaseHelper.getCount();
+    return numTasks;
+  }
+
+  String taskOrTasks(int numTasks) {
+    if (numTasks == 1) {
+      return "Task";
+    } else {
+      return "Tasks";
+    }
+  }
+
+  int indexDayOfWeek(String weekday) {
+    switch (weekday) {
+      case "Monday":
+        return 0;
+        break;
+      case "Tuesday":
+        return 1;
+        break;
+      case "Wednesday":
+        return 2;
+        break;
+      case "Thursday":
+        return 3;
+        break;
+      case "Friday":
+        return 4;
+        break;
+      case "Saturday":
+        return 5;
+        break;
+      case "Sunday":
+        return 6;
+        break;
+      default:
+        debugPrint("Switch case error");
+        return null;
+        break;
+    }
   }
 }

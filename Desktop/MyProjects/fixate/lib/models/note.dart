@@ -1,20 +1,28 @@
 class Note {
   int _id;
   String _title;
-  DateTime _dateAndTime;
+  String _dateAndTime;
   String _location;
+  String _day;
   String _notes;
+  // String _dateAdded;
 
-  Note(this._title, this._dateAndTime, this._location, [this._notes]);
-
-  Note.withId(this._id, this._title, this._dateAndTime, this._location,
+  Note(this._title, this._dateAndTime, this._location, this._day,
       [this._notes]);
+
+  Note.withId(
+      this._id, this._title, this._dateAndTime, this._location, this._day,
+      [this._notes]);
+
+  // this._dateAdded,
 
   int get id => _id;
   String get title => _title;
-  DateTime get dateAndTime => _dateAndTime;
+  String get dateAndTime => _dateAndTime;
   String get notes => _notes;
   String get location => _location;
+  String get day => _day;
+  // String get dateAdded => _dateAdded;
 
   set title(String newTitle) {
     if (newTitle.length <= 255) {
@@ -22,7 +30,7 @@ class Note {
     }
   }
 
-  set dateAndTime(DateTime newDateAndTime) {
+  set dateAndTime(String newDateAndTime) {
     this._dateAndTime = newDateAndTime;
   }
 
@@ -38,6 +46,16 @@ class Note {
     }
   }
 
+  set day(String newDay) {
+    if (newDay.length <= 255) {
+      this._day = newDay;
+    }
+  }
+
+  // set dateAdded(String newDateAdded) {
+  //   this._dateAdded = newDateAdded;
+  // }
+
   //converting a note object into a map object
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
@@ -49,6 +67,8 @@ class Note {
     map['dateAndTime'] = _dateAndTime;
     map['location'] = _location;
     map['notes'] = _notes;
+    map['day'] = _day;
+    // map['dateAdded'] = _dateAdded;
 
     return map;
   }
@@ -59,6 +79,8 @@ class Note {
     this._title = map['title'];
     this._dateAndTime = map['dateAndTime'];
     this._location = map['location'];
-    this.notes = map['notes'];
+    this._notes = map['notes'];
+    this._day = map['day'];
+    // this._dateAdded = map['dateAdded'];
   }
 }

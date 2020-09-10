@@ -1,5 +1,5 @@
-class HomeCardValues { 
+class HomeCardValues {
   final String day;
-  final int numTasks;
+  int numTasks;
   HomeCardValues(this.day, this.numTasks);
 }

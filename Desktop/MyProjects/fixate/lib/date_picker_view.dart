@@ -16,14 +16,14 @@ class DatePickerViewState extends State<DatePickerView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Select Date"),
+        title: Text("Select Time"),
       ),
       body: Column(
         children: <Widget>[
           SizedBox(
               height: 200,
               child: CupertinoDatePicker(
-                // mode: CupertinoDatePickerMode.date,
+                mode: CupertinoDatePickerMode.time,
                 use24hFormat: false,
                 initialDateTime: _dateTime,
                 onDateTimeChanged: (dateTime) {
