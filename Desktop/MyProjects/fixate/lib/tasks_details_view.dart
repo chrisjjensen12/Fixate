@@ -149,7 +149,8 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                         onPressed: () {
                           setState(() {
                             if (_formKey.currentState.validate()) {
-                              debugPrint("Save clicked");
+                              debugPrint(
+                                  "Save clicked:\n${note.title}, ${note.day}, ${note.dateAndTime}, ${note.location}, ${note.notes}");
                               _save();
                             }
                           });

@@ -38,7 +38,8 @@ class _HomeViewState extends State<HomeView> {
   Widget buildDaysCard(BuildContext context, int index) {
     final homeCardValue = daysList[index];
     getTasks().then((int result) {
-      daysList[0].numTasks = result;
+      //increment through all weekdays here to update all the dayslist[index] also getTasks(weekday)
+      daysList[0].numTasks = result; //dayslist[indexDayOfWeek(note.day)]
       setState(() {});
     });
     return new Center(
@@ -114,7 +115,8 @@ class _HomeViewState extends State<HomeView> {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                homeCardValue.numTasks.toString(),
+                                homeCardValue.numTasks
+                                    .toString(), //display number of tasks here
                                 style: Theme.of(context).textTheme.headline2,
                               ),
                             ],
@@ -142,8 +144,20 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  void _showAlertDialog(String title, String message) {
+    AlertDialog alertDialog = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+    );
+    showDialog(context: context, builder: (_) => alertDialog);
+  }
+
   Future<int> getTasks() async {
     int numTasks = await databaseHelper.getCount();
+    if (numTasks >= 100) {
+      _showAlertDialog("Status", 'Max Number Reached, tasks will stay at 99.');
+      return 99;
+    }
     return numTasks;
   }
 
