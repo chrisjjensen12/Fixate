@@ -1,8 +1,9 @@
 import 'package:fixate/home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'pages.dart';
+// import 'pages.dart';
 import 'home_view.dart';
+import 'calendar_view.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,10 +14,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
+  List<String> titleList = ["Your Week", "Calendar"];
   final List<Widget> _children = [
     HomeView(),
-    ToDo(),
-    Calendar(),
+    // ToDo(),
+    CalendarView(),
   ];
 
   @override
@@ -24,7 +26,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Your Week",
+          titleList[_currentIndex],
           style: Theme.of(context).textTheme.headline4,
         ),
         backgroundColor: Colors.white,

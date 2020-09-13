@@ -5,6 +5,7 @@ import 'package:fixate/utils/database_helper.dart';
 import 'dart:async';
 
 class HomeView extends StatefulWidget {
+  @override
   // final Note note;
   // HomeView(this.note);
   _HomeViewState createState() => _HomeViewState();

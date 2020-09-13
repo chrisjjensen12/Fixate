@@ -14,7 +14,7 @@ class TasksDetailsView extends StatefulWidget {
   final String appBarTitle;
   final Note note;
   TasksDetailsView(this.note, this.appBarTitle);
-
+  @override
   State<StatefulWidget> createState() {
     return TasksDetailsViewState(this.note, this.appBarTitle);
   }
