@@ -199,16 +199,16 @@ class DatabaseHelper {
 
     return noteList;
   }
-}
 
-// // Get number of Note objects based on WEEKDAY in database
-// Future<int> getCountWeekday(String weekday) async {
-//   Database db = await this.database;
-//   List<Map<String, dynamic>> x =
-//       await db.rawQuery('SELECT COUNT (*) from $noteTable');
-//   int result = Sqflite.firstIntValue(x);
-//   return result;
-// }
+  // Get number of Note objects based on WEEKDAY in database
+  Future<int> getCountWeekday(String weekday) async {
+    Database db = await this.database;
+    List<Map<String, dynamic>> x = await db
+        .rawQuery('SELECT COUNT (*) from $noteTable WHERE day= ?', [weekday]);
+    int result = Sqflite.firstIntValue(x);
+    return result;
+  }
+}
 
 // // Get the 'Map List' [ List<Map> ] and convert it to 'Note List' [ List<Note> ]
 // Future<List<Note>> getNoteList() async {

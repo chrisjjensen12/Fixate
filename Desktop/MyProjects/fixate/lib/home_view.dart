@@ -14,8 +14,7 @@ class _HomeViewState extends State<HomeView> {
   // final Note note;
   // _HomeViewState(this.note);
   DatabaseHelper databaseHelper = DatabaseHelper();
-  final List<HomeCardValues> daysList = [
-    //you can add numerical values to this, look at 1manstartup listview cards
+  List<HomeCardValues> daysList = [
     HomeCardValues("Monday", 0),
     HomeCardValues("Tuesday", 0),
     HomeCardValues("Wednesday", 0),
@@ -36,10 +35,16 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget buildDaysCard(BuildContext context, int index) {
-    final homeCardValue = daysList[index];
-    getTasks().then((int result) {
-      //increment through all weekdays here to update all the dayslist[index] also getTasks(weekday)
-      daysList[0].numTasks = result; //dayslist[indexDayOfWeek(note.day)]
+    // for (var i = 0; i <= 6; i++) {
+    // getTasks(indexDayOfWeek(i)).then((int result) {
+    //   daysList[i].numTasks = result;
+    //   setState(() {});
+    // });
+    //   // print(i);
+    // }
+    HomeCardValues homeCardValue = daysList[index];
+    getTasks(homeCardValue.day).then((int result) {
+      homeCardValue.numTasks = result;
       setState(() {});
     });
     return new Center(
@@ -128,7 +133,7 @@ class _HomeViewState extends State<HomeView> {
                           child: Row(
                             children: <Widget>[
                               Text(
-                                taskOrTasks(daysList[0].numTasks),
+                                taskOrTasks(homeCardValue.numTasks),
                                 style: Theme.of(context).textTheme.headline3,
                               ),
                             ],
@@ -152,8 +157,8 @@ class _HomeViewState extends State<HomeView> {
     showDialog(context: context, builder: (_) => alertDialog);
   }
 
-  Future<int> getTasks() async {
-    int numTasks = await databaseHelper.getCount();
+  Future<int> getTasks(String weekday) async {
+    int numTasks = await databaseHelper.getCountWeekday(weekday);
     if (numTasks >= 100) {
       _showAlertDialog("Status", 'Max Number Reached, tasks will stay at 99.');
       return 99;
@@ -169,28 +174,28 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-  int indexDayOfWeek(String weekday) {
+  String indexDayOfWeek(int weekday) {
     switch (weekday) {
-      case "Monday":
-        return 0;
+      case 0:
+        return "Monday";
         break;
-      case "Tuesday":
-        return 1;
+      case 1:
+        return "Tuesday";
         break;
-      case "Wednesday":
-        return 2;
+      case 2:
+        return "Wednesday";
         break;
-      case "Thursday":
-        return 3;
+      case 3:
+        return "Thursday";
         break;
-      case "Friday":
-        return 4;
+      case 4:
+        return "Friday";
         break;
-      case "Saturday":
-        return 5;
+      case 5:
+        return "Saturday";
         break;
-      case "Sunday":
-        return 6;
+      case 6:
+        return "Sunday";
         break;
       default:
         debugPrint("Switch case error");
