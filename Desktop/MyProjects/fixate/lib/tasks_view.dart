@@ -37,6 +37,12 @@ class _TasksState extends State<TasksView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarTitle),
+        // leading: new IconButton(
+        //   icon: new Icon(Icons.arrow_back),
+        //   onPressed: () {
+        //     Navigator.pop(context, true);
+        //   },
+        // ),
         backgroundColor: Colors.white,
         actions: <Widget>[
           IconButton(

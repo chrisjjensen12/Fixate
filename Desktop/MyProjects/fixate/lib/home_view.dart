@@ -15,15 +15,6 @@ class _HomeViewState extends State<HomeView> {
   // final Note note;
   // _HomeViewState(this.note);
   DatabaseHelper databaseHelper = DatabaseHelper();
-  List<HomeCardValues> daysList = [
-    HomeCardValues("Monday", 0),
-    HomeCardValues("Tuesday", 0),
-    HomeCardValues("Wednesday", 0),
-    HomeCardValues("Thursday", 0),
-    HomeCardValues("Friday", 0),
-    HomeCardValues("Saturday", 0),
-    HomeCardValues("Sunday", 0),
-  ];
 
   Widget build(BuildContext context) {
     return Container(
@@ -36,18 +27,14 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget buildDaysCard(BuildContext context, int index) {
-    // for (var i = 0; i <= 6; i++) {
-    // getTasks(indexDayOfWeek(i)).then((int result) {
-    //   daysList[i].numTasks = result;
-    //   setState(() {});
-    // });
-    //   // print(i);
-    // }
     HomeCardValues homeCardValue = daysList[index];
     getTasks(homeCardValue.day).then((int result) {
-      homeCardValue.numTasks = result;
-      setState(() {});
+      if (homeCardValue.numTasks != result) {
+        homeCardValue.numTasks = result;
+        setState(() {});
+      }
     });
+    print(homeCardValue.numTasks);
     return new Center(
       child: Padding(
         padding: const EdgeInsets.all(7.0),
@@ -92,7 +79,7 @@ class _HomeViewState extends State<HomeView> {
                                       MaterialPageRoute(builder: (context) {
                                         return TasksView(homeCardValue.day);
                                       }),
-                                    );
+                                    ).then((value) => setState(() {}));
                                   },
                                   elevation: 2.0,
                                   fillColor: Colors.black,
@@ -172,36 +159,6 @@ class _HomeViewState extends State<HomeView> {
       return "Task";
     } else {
       return "Tasks";
-    }
-  }
-
-  String indexDayOfWeek(int weekday) {
-    switch (weekday) {
-      case 0:
-        return "Monday";
-        break;
-      case 1:
-        return "Tuesday";
-        break;
-      case 2:
-        return "Wednesday";
-        break;
-      case 3:
-        return "Thursday";
-        break;
-      case 4:
-        return "Friday";
-        break;
-      case 5:
-        return "Saturday";
-        break;
-      case 6:
-        return "Sunday";
-        break;
-      default:
-        debugPrint("Switch case error");
-        return null;
-        break;
     }
   }
 }
