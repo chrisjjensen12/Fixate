@@ -10,34 +10,31 @@ import 'package:fixate/utils/database_helper.dart';
 // import 'package:flutter_cupertino_date_picker/flutter_cupertino_date_picker.dart';
 
 // ignore: must_be_immutable
-class TasksDetailsView extends StatefulWidget {
+class NotesDetailsView extends StatefulWidget {
   final String appBarTitle;
   final Note note;
-  TasksDetailsView(this.note, this.appBarTitle);
+  NotesDetailsView(this.note, this.appBarTitle);
   @override
   State<StatefulWidget> createState() {
-    return TasksDetailsViewState(this.note, this.appBarTitle);
+    return NotesDetailsViewState(this.note, this.appBarTitle);
   }
 }
 
-class TasksDetailsViewState extends State<TasksDetailsView> {
+class NotesDetailsViewState extends State<NotesDetailsView> {
   TextEditingController titleController = TextEditingController();
   TextEditingController notesController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
-  DateTime _dateTime;
-  DateTime _dateTime1;
   String appBarTitle;
   Note note;
   DatabaseHelper helper = DatabaseHelper();
-  TasksDetailsViewState(this.note, this.appBarTitle);
+  NotesDetailsViewState(this.note, this.appBarTitle);
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     titleController.text = note.title;
     notesController.text = note.notes;
-    locationController.text = note.location;
-
+    note.dateAndTime =
+        DateFormat('MM/dd/yyyy').format(DateTime.now()).toString();
     return Form(
       key: _formKey,
       child: Scaffold(
@@ -73,80 +70,12 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                       labelText: "Title",
                     ),
                   )),
-              // date time picker
-              Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 5),
-                child: CupertinoButton(
-                  color: Colors.black,
-                  child: Text(
-                      _dateTime == null
-                          ? 'Select Time'
-                          : DateFormat(
-                                  'h:mm aaa') //fix to make it just select time and not date
-                              .format(_dateTime),
-                      style: new TextStyle(color: Colors.white)),
-                  onPressed: () {
-                    navigateToDatePicker(context).then((DateTime result) {
-                      _dateTime = result;
-                      note.dateAndTime =
-                          DateFormat('h:mm aaa').format(_dateTime);
-                      setState(() {});
-                    });
-                  },
-                ),
-              ),
-              // date time picker for to
-              Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 5),
-                child: CupertinoButton(
-                  color: Colors.black,
-                  child: Text(
-                      _dateTime1 == null
-                          ? 'Select Time To (Optional)'
-                          : DateFormat(
-                                  'h:mm aaa') //fix to make it just select time and not date
-                              .format(_dateTime1),
-                      style: new TextStyle(color: Colors.white)),
-                  onPressed: () {
-                    navigateToDatePicker(context).then((DateTime result) {
-                      _dateTime1 = result;
-                      note.dateAndTimeTo =
-                          DateFormat('h:mm aaa').format(_dateTime1);
-                      setState(() {});
-                    });
-                  },
-                ),
-              ),
-              //location
-              Padding(
-                  padding: EdgeInsets.only(top: 10, bottom: 5),
-                  child: TextFormField(
-                    maxLines: 1,
-                    maxLength: 35,
-                    maxLengthEnforced: true,
-                    controller: locationController,
-                    onChanged: (value) {
-                      note.location = locationController.text;
-                      debugPrint("location field");
-                    },
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter a location';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0)),
-                      labelText: "Location",
-                    ),
-                  )),
               //notes
               Padding(
                   padding: EdgeInsets.only(top: 5, bottom: 5),
                   child: TextField(
-                    maxLines: 3,
-                    maxLengthEnforced: false,
+                    maxLines: null,
+                    maxLengthEnforced: true,
                     controller: notesController,
                     onChanged: (value) {
                       note.notes = notesController.text;
@@ -173,7 +102,7 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                           setState(() {
                             if (_formKey.currentState.validate()) {
                               debugPrint(
-                                  "Save clicked:\n${note.title}, ${note.day}, ${note.dateAndTime}, ${note.location}, ${note.notes}, ${note.dateAndTimeTo}");
+                                  "Save clicked:\n${note.title}, ${note.day}, ${note.dateAndTime}, ${note.location}, ${note.notes}");
                               _save();
                             }
                           });
@@ -275,43 +204,3 @@ Future<DateTime> navigateToDatePicker(BuildContext context) async {
   //     '${result.month}/${result.day}/${result.year} ${result.hour}:${result.minute}');
   return result;
 }
-
-//display date and time
-// Padding(
-//   padding: EdgeInsets.only(top: 15, bottom: 15),
-//   child: Row(
-//     children: <Widget>[
-//       Expanded(
-//         child: CupertinoButton(
-//           color: Colors.black,
-//           child: Text(
-//               _dateTime == null
-//                   ? 'Select Date'
-//                   : _dateTime.toString(),
-//               style: new TextStyle(color: Colors.white)),
-//           onPressed: () {
-//             navigateToDatePicker(context).then((DateTime result) {
-//               // print(
-//               //     '${result.month}/${result.day}/${result.year} ${result.hour}:${result.minute}');
-//               _dateTime = result;
-//               setState(() {});
-//             });
-//           },
-//         ),
-//       ),
-//       Container(width: 5.0),
-//       Expanded(
-//         child: CupertinoButton(
-//           pressedOpacity: 1,
-//           color: Colors.black,
-//           child: Text(
-//               _dateTime == null ? 'null' : _dateTime.toString(),
-//               style: new TextStyle(color: Colors.white)),
-//           onPressed: () {
-//             debugPrint("nothing happens");
-//           },
-//         ),
-//       ),
-//     ],
-//   ),
-// ),

@@ -15,6 +15,7 @@ class DatabaseHelper {
   String colLocation = 'location';
   String colDateAndTime = 'dateAndTime';
   String colDay = 'day';
+  String colDateAndTimeTo = 'dateAndTimeTo';
   // String colDateAdded = 'dateAdded';
 
   DatabaseHelper._createInstance();
@@ -47,7 +48,7 @@ class DatabaseHelper {
   void _createDb(Database db, int newVersion) async {
     await db.execute(
         'CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, '
-        '$colNotes TEXT, $colLocation TEXT, $colDateAndTime TEXT, $colDay TEXT)');
+        '$colNotes TEXT, $colLocation TEXT, $colDateAndTime TEXT, $colDay TEXT, $colDateAndTimeTo TEXT)');
   }
   //  $colDateAdded TEXT
 
@@ -130,6 +131,16 @@ class DatabaseHelper {
     return result;
   }
 
+  // Fetch Operation: Get all note objects from database
+  Future<List<Map<String, dynamic>>> getNotesList() async {
+    Database db = await this.database;
+    // String val = "Sunday";
+//		var result = await db.rawQuery('SELECT * FROM $noteTable order by $colPriority ASC');
+    var result =
+        await db.rawQuery('SELECT * FROM $noteTable WHERE day= ?', ['Notes']);
+    return result;
+  }
+
   // Insert Operation: Insert a Note object to database
   Future<int> insertNote(Note note) async {
     Database db = await this.database;
@@ -186,6 +197,9 @@ class DatabaseHelper {
         break;
       case "Sunday":
         noteMapList = await getSundayList(); // Get 'Map List' from database
+        break;
+      case "Notes":
+        noteMapList = await getNotesList(); // Get 'Map List' from database
         break;
     }
 

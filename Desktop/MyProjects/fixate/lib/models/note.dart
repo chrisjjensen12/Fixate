@@ -5,14 +5,15 @@ class Note {
   String _location;
   String _day;
   String _notes;
+  String _dateAndTimeTo;
   // String _dateAdded;
 
   Note(this._title, this._dateAndTime, this._location, this._day,
-      [this._notes]);
+      [this._dateAndTimeTo, this._notes]);
 
   Note.withId(
       this._id, this._title, this._dateAndTime, this._location, this._day,
-      [this._notes]);
+      [this._dateAndTimeTo, this._notes]);
 
   // this._dateAdded,
 
@@ -22,6 +23,7 @@ class Note {
   String get notes => _notes;
   String get location => _location;
   String get day => _day;
+  String get dateAndTimeTo => _dateAndTimeTo;
   // String get dateAdded => _dateAdded;
 
   set title(String newTitle) {
@@ -52,6 +54,10 @@ class Note {
     }
   }
 
+  set dateAndTimeTo(String newDateAndTimeTo) {
+    this._dateAndTimeTo = newDateAndTimeTo;
+  }
+
   // set dateAdded(String newDateAdded) {
   //   this._dateAdded = newDateAdded;
   // }
@@ -68,6 +74,7 @@ class Note {
     map['location'] = _location;
     map['notes'] = _notes;
     map['day'] = _day;
+    map['dateAndTimeTo'] = _dateAndTimeTo;
     // map['dateAdded'] = _dateAdded;
 
     return map;
@@ -81,6 +88,7 @@ class Note {
     this._location = map['location'];
     this._notes = map['notes'];
     this._day = map['day'];
+    this._dateAndTimeTo = map['dateAndTimeTo'];
     // this._dateAdded = map['dateAdded'];
   }
 }

@@ -34,7 +34,7 @@ class _HomeViewState extends State<HomeView> {
         setState(() {});
       }
     });
-    print(homeCardValue.numTasks);
+    // print(homeCardValue.numTasks);
     return new Center(
       child: Padding(
         padding: const EdgeInsets.all(7.0),

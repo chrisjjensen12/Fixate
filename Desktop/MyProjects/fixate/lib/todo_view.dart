@@ -14,7 +14,6 @@ class _ToDoState extends State<ToDo> {
   DatabaseHelper databaseHelper = DatabaseHelper();
   List<Note> noteList;
   int count = 0;
-  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class _ToDoState extends State<ToDo> {
       updateListView(weekday);
     }
 
-    debugPrint(weekday);
+    // debugPrint(weekday);
     return Scaffold(
       body: getTasksListView(weekday),
     );
@@ -37,22 +36,13 @@ class _ToDoState extends State<ToDo> {
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
         return Card(
-          color: Colors.white,
-          elevation: 2.0,
-          child: CheckboxListTile(
-            title: Text(this.noteList[position].title),
-            subtitle: Text(this.noteList[position].day),
-            activeColor: Colors.black,
-            checkColor: Colors.white,
-            value: _isChecked,
-            selected: _isChecked,
-            onChanged: (bool value) {
-              setState(() {
-                _isChecked = value;
-              });
-            },
-          ),
-        );
+            color: Colors.white,
+            elevation: 2.0,
+            child: ListTile(
+              title: Text(this.noteList[position].title),
+              subtitle: Text(
+                  "${this.noteList[position].dateAndTime}-${this.noteList[position].dateAndTimeTo}"),
+            ));
       },
     );
   }

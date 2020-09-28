@@ -46,6 +46,8 @@ class _TasksState extends State<TasksView> {
         backgroundColor: Colors.white,
         actions: <Widget>[
           IconButton(
+            splashColor: Colors.white,
+            highlightColor: Colors.white,
             icon: Icon(
               Icons.add,
               color: Colors.black,
@@ -57,7 +59,8 @@ class _TasksState extends State<TasksView> {
                     '',
                     '',
                     appBarTitle,
-                    '',
+                    ''
+                        '',
                   ),
                   "New Task: $appBarTitle");
             },
@@ -78,7 +81,7 @@ class _TasksState extends State<TasksView> {
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: Colors.black,
-              child: Text("hi"),
+              child: Icon(Icons.arrow_forward, color: Colors.white),
             ),
             title: Text(this.noteList[position].title),
             subtitle: Text(this.noteList[position].day),

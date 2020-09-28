@@ -1,4 +1,5 @@
 import 'package:fixate/home_view.dart';
+import 'package:fixate/notes_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'todo_view.dart';
@@ -15,10 +16,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  List<String> titleList = ["Your Week", "Today", "Calendar"];
+  List<String> titleList = ["Your Week", "Today", "Notes", "Calendar"];
+  // List<Color> iconHighlightColorList = [null, null, Colors.black, null];
   final List<Widget> _children = [
     HomeView(),
     ToDo(),
+    NotesView(),
     CalendarView(),
   ];
 
@@ -48,6 +51,10 @@ class _HomeState extends State<Home> {
             BottomNavigationBarItem(
               icon: new Icon(Icons.check_circle_outline, size: 25),
               title: Text("To Do"),
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.note, size: 25),
+              title: Text("Notes"),
             ),
             BottomNavigationBarItem(
               icon: new Icon(Icons.calendar_today, size: 25),
