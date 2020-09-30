@@ -80,7 +80,7 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                   color: Colors.black,
                   child: Text(
                       _dateTime == null
-                          ? 'Select Time'
+                          ? 'Start Time'
                           : DateFormat(
                                   'h:mm aaa') //fix to make it just select time and not date
                               .format(_dateTime),
@@ -88,8 +88,12 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                   onPressed: () {
                     navigateToDatePicker(context).then((DateTime result) {
                       _dateTime = result;
-                      note.dateAndTime =
-                          DateFormat('h:mm aaa').format(_dateTime);
+                      if (_dateTime != null) {
+                        note.dateAndTime =
+                            DateFormat('h:mm aaa').format(_dateTime);
+                      } else {
+                        note.dateAndTime = "No Start Time Selected";
+                      }
                       setState(() {});
                     });
                   },
@@ -102,7 +106,7 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                   color: Colors.black,
                   child: Text(
                       _dateTime1 == null
-                          ? 'Select Time To (Optional)'
+                          ? 'End Time'
                           : DateFormat(
                                   'h:mm aaa') //fix to make it just select time and not date
                               .format(_dateTime1),
@@ -110,8 +114,12 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
                   onPressed: () {
                     navigateToDatePicker(context).then((DateTime result) {
                       _dateTime1 = result;
-                      note.dateAndTimeTo =
-                          DateFormat('h:mm aaa').format(_dateTime1);
+                      if (_dateTime1 != null) {
+                        note.dateAndTimeTo =
+                            DateFormat('h:mm aaa').format(_dateTime1);
+                      } else {
+                        note.dateAndTimeTo = "No End Time Selected";
+                      }
                       setState(() {});
                     });
                   },

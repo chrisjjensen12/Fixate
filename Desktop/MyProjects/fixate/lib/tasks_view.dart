@@ -1,10 +1,10 @@
-//note_list.dart
 import 'package:flutter/material.dart';
 import 'tasks_details_view.dart';
 import 'package:fixate/models/note.dart';
 import 'package:fixate/utils/database_helper.dart';
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 // ignore: must_be_immutable
 class TasksView extends StatefulWidget {
@@ -75,34 +75,58 @@ class _TasksState extends State<TasksView> {
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
-        return Card(
-          color: Colors.white,
-          elevation: 2.0,
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.black,
-              child: Icon(Icons.arrow_forward, color: Colors.white),
+        return Slidable(
+          actionPane: SlidableStrechActionPane(),
+          actionExtentRatio: 0.25,
+          secondaryActions: <Widget>[
+            IconSlideAction(
+              caption: 'Edit',
+              color: Colors.black,
+              icon: Icons.edit,
+              onTap: () => navigateToDetail(
+                  this.noteList[position], 'Edit Task: $appBarTitle'),
             ),
-            title: Text(this.noteList[position].title),
-            subtitle: Text(this.noteList[position].day),
-            trailing: GestureDetector(
-              child: Icon(
-                Icons.delete,
-                color: Colors.grey,
+            IconSlideAction(
+              caption: 'Delete',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: () => _delete(context, noteList[position]),
+            ),
+          ],
+          child: Card(
+            color: Colors.white,
+            elevation: 2,
+            child: ListTile(
+              trailing: Text(timeString(this.noteList[position])),
+              leading: CircleAvatar(
+                backgroundColor: Colors.black,
+                child: Icon(Icons.arrow_forward, color: Colors.white),
               ),
-              onTap: () {
-                _delete(context, noteList[position]);
-              },
+              title: Text(this.noteList[position].title),
+              subtitle: Text(this.noteList[position].location),
             ),
-            onTap: () {
-              // debugPrint("ListTile Tapped");
-              navigateToDetail(
-                  this.noteList[position], 'Edit Task: $appBarTitle');
-            },
           ),
         );
       },
     );
+  }
+
+  String timeString(Note note) {
+    // debugPrint("dateAndTime: ${note.dateAndTime}");
+    // debugPrint("dateAndTimeTo: ${note.dateAndTimeTo}");
+    if (note.dateAndTime == '' && note.dateAndTimeTo == '') {
+      return "No Time Selected";
+    }
+    if (note.dateAndTime == '' && note.dateAndTimeTo != '') {
+      return "End Time: ${note.dateAndTimeTo}";
+    }
+    if (note.dateAndTime != '' && note.dateAndTimeTo == '') {
+      return "Start Time: ${note.dateAndTime}";
+    }
+    if (note.dateAndTime != '' && note.dateAndTimeTo != '') {
+      return "${note.dateAndTime} - ${note.dateAndTimeTo}";
+    }
+    return "null";
   }
 
   void navigateToDetail(Note note, String title) async {

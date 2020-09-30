@@ -26,6 +26,7 @@ dependencies:
   sqflite: any
   flutter_calendar_carousel: any
   path_provider: any
+  flutter_slidable: any
   flutter:
     sdk: flutter
 
