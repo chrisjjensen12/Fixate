@@ -231,7 +231,7 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
 
     if (result != 0) {
       // Success
-      _showAlertDialog('Status', 'Note Saved Successfully');
+      // _showAlertDialog('Status', 'Note Saved Successfully');
     } else {
       // Failure
       _showAlertDialog('Status', 'Problem Saving Note');
@@ -246,7 +246,7 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
     if (note.id == null) {
       // debugPrint("note.id = null");
       // _showAlertDialog('Status', 'No Note was deleted');
-      debugPrint("No note was deleted");
+      // debugPrint("No note was deleted");
       return;
     }
 
@@ -254,7 +254,7 @@ class TasksDetailsViewState extends State<TasksDetailsView> {
     int result = await helper.deleteNote(note.id);
     if (result != 0) {
       // debugPrint("result != 0");
-      debugPrint("Note deleted successfully");
+      // debugPrint("Note deleted successfully");
     } else {
       // debugPrint("result == 0");
       _showAlertDialog('Status', 'Error Occured while Deleting Note');

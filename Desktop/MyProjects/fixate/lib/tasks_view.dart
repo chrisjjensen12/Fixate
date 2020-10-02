@@ -5,6 +5,7 @@ import 'package:fixate/utils/database_helper.dart';
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'details_view.dart';
 
 // ignore: must_be_immutable
 class TasksView extends StatefulWidget {
@@ -90,7 +91,7 @@ class _TasksState extends State<TasksView> {
               caption: 'Delete',
               color: Colors.red,
               icon: Icons.delete,
-              onTap: () => _delete(context, noteList[position]),
+              onTap: () => _delete(context, this.noteList[position]),
             ),
           ],
           child: Card(
@@ -98,9 +99,15 @@ class _TasksState extends State<TasksView> {
             elevation: 2,
             child: ListTile(
               trailing: Text(timeString(this.noteList[position])),
-              leading: CircleAvatar(
-                backgroundColor: Colors.black,
-                child: Icon(Icons.arrow_forward, color: Colors.white),
+              leading: GestureDetector(
+                onTap: () {
+                  //navigate to details page
+                  navigateToDetailsPage(this.noteList[position]);
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.black,
+                  child: Icon(Icons.arrow_forward, color: Colors.white),
+                ),
               ),
               title: Text(this.noteList[position].title),
               subtitle: Text(this.noteList[position].location),
@@ -140,10 +147,16 @@ class _TasksState extends State<TasksView> {
     }
   }
 
+  void navigateToDetailsPage(Note note) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return DetailsView(note);
+    }));
+  }
+
   void _delete(BuildContext context, Note note) async {
     int result = await databaseHelper.deleteNote(note.id);
     if (result != 0) {
-      debugPrint("Note deleted successfully");
+      // debugPrint("Note deleted successfully");
       updateListView(appBarTitle);
     }
   }

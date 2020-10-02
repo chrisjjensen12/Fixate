@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'notes_details_view.dart';
 import 'package:fixate/models/note.dart';
 import 'package:fixate/utils/database_helper.dart';
 import 'dart:async';
 import 'package:sqflite/sqflite.dart';
+import 'details_view2.dart';
 
 class NotesView extends StatefulWidget {
   @override
@@ -51,33 +53,51 @@ class _NotesViewState extends State<NotesView> {
     return ListView.builder(
       itemCount: count,
       itemBuilder: (BuildContext context, int position) {
-        return Card(
-          color: Colors.white,
-          elevation: 2.0,
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.black,
-              child: Icon(Icons.arrow_forward, color: Colors.white),
+        return Slidable(
+          actionPane: SlidableStrechActionPane(),
+          actionExtentRatio: 0.25,
+          secondaryActions: <Widget>[
+            IconSlideAction(
+              caption: 'Edit',
+              color: Colors.black,
+              icon: Icons.edit,
+              onTap: () =>
+                  navigateToNoteDetail(this.noteList[position], 'Edit Note'),
             ),
-            title: Text(this.noteList[position].title),
-            subtitle: Text(this.noteList[position].dateAndTime),
-            trailing: GestureDetector(
-              child: Icon(
-                Icons.delete,
-                color: Colors.grey,
+            IconSlideAction(
+              caption: 'Delete',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: () => _delete(context, this.noteList[position]),
+            ),
+          ],
+          child: Card(
+            color: Colors.white,
+            elevation: 2.0,
+            child: ListTile(
+              leading: GestureDetector(
+                onTap: () {
+                  //navigate to details page
+                  navigateToDetails2Page(this.noteList[position]);
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.black,
+                  child: Icon(Icons.arrow_forward, color: Colors.white),
+                ),
               ),
-              onTap: () {
-                _delete(context, noteList[position]);
-              },
+              title: Text(this.noteList[position].title),
+              subtitle: Text(this.noteList[position].dateAndTime),
             ),
-            onTap: () {
-              // debugPrint("ListTile Tapped");
-              navigateToNoteDetail(this.noteList[position], 'Edit Note');
-            },
           ),
         );
       },
     );
+  }
+
+  void navigateToDetails2Page(Note note) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return DetailsView2(note);
+    }));
   }
 
   void navigateToNoteDetail(Note note, String title) async {
@@ -94,7 +114,7 @@ class _NotesViewState extends State<NotesView> {
   void _delete(BuildContext context, Note note) async {
     int result = await databaseHelper.deleteNote(note.id);
     if (result != 0) {
-      debugPrint("Note deleted successfully");
+      // debugPrint("Note deleted successfully");
       updateListView(appBarTitle);
     }
   }
